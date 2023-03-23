@@ -1,14 +1,11 @@
 //      query sql
-//        select r.name, r.region_id, c.name
-//        from regions r
-//        join continents c
-//        on c.continent_id = r.continent_id
-//        order by r.name asc;
+//        select c.country_id, c.name, r.name, c2.name
+//        from countries c
+//        join regions r on c.region_id = r.region_id
+//        join continents c2  on r.continent_id = c2.continent_id
+//        order by c.name asc;
 
 package org.lessons.java;
-
-import com.mysql.cj.util.PerVmServerConfigCacheFactory;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -30,12 +27,12 @@ public class Nations {
 
             String query = """
                         
-                        select r.name, r.region_id, c.name
-                        from regions r
-                        join continents c
-                        on c.continent_id = r.continent_id
-                        where r.name like "%"?"%"
-                        order by r.name asc;
+                        select c.country_id, c.name, r.name, c2.name 
+                        from countries c
+                        join regions r on c.region_id = r.region_id
+                        join continents c2  on r.continent_id = c2.continent_id
+                        where c.name like "%"?"%"
+                        order by c.name asc;
                         
                     """;
 
@@ -45,10 +42,11 @@ public class Nations {
 
                 try(ResultSet rs = ps.executeQuery()) {
                     while (rs.next()){
-                        String name = rs.getString("r.name");
-                        int id = rs.getInt("r.region_id");
                         String cName = rs.getString("c.name");
-                        System.out.println(name + " - " + id + " - " + cName );
+                        int id = rs.getInt("c.country_id");
+                        String conName = rs.getString("c2.name");
+                        String rName = rs.getString("r.name");
+                        System.out.println(id + " - " + cName + " - " + rName + " - " + conName);
                     }
                 }
             }
