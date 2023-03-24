@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class Nations {
 
-    public static void main(String[] args) {
+    private static final String URL = "jdbc:mysql://localhost:3306/nations_db";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-        String URL = "jdbc:mysql://localhost:3306/nations_db";
-        String USER = "root";
-        String PASSWORD = "root";
+    public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
 
@@ -49,6 +49,23 @@ public class Nations {
                         System.out.println(id + " - " + cName + " - " + rName + " - " + conName);
                     }
                 }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        System.out.println("Select an region id:");
+        int inputId = Integer.parseInt(input.nextLine());
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
+
+            String query = """
+                    
+                    """;
+
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+
             }
 
         }catch (SQLException e){
